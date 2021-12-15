@@ -1,30 +1,29 @@
-# 二叉树
+# 二叉树的定义和四种遍历方式
+## 1. 二叉树的定义
 
 > Definition of binary tree by c++
 ```C++
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
- * };
- */
+struct TreeNode {
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode() : val(0), left(nullptr), right(nullptr) {}
+    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+    TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+};
+
 ```
 > Definition of a binary tree by python
 ```python
-# Definition for a binary tree node.
-# class TreeNode:
-#     def __init__(self, val=0, left=None, right=None):
-#         self.val = val
-#         self.left = left
-#         self.right = right
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
 ```
-## 二叉树的遍历-迭代实现
-- 前序遍历（两种方法）
+## 2. 二叉树的遍历-迭代实现
+> 前序遍历，中序遍历，后序遍历，层次遍历
+### 2.1 前序遍历（两种方法）
 > 方法一：C++
 ```C++ []
     vector<int> preorderTraversal(TreeNode* root) {
@@ -103,8 +102,8 @@ class Solution:
                 stk.append(node.left)
         return ans
 ```
-> 方法二：Python
-- 中序遍历（一种方法）
+
+### 2.2 中序遍历（一种方法）
 > C++
 ```C++ []
     vector<int> inorderTraversal(TreeNode* root) {
@@ -140,7 +139,7 @@ class Solution:
         return ans
 ```
 
-- 后序遍历（两种方法）
+### 2.3 后序遍历（两种方法）
 > 方法一（由前序遍历颠倒顺序得到）：C++
 ```C++ []
 class Solution {
@@ -229,5 +228,60 @@ class Solution:
                 node = None
             else:
                 node = node.right
+        return ans
+```
+
+### 2.4 层次遍历
+> C++
+```C++ []
+class Solution {
+public:
+    vector<vector<int>> levelOrder(TreeNode* root) {
+        if (root == nullptr) {
+            return {};
+        }
+        vector<vector<int>> ans;
+        queue<TreeNode*> que;
+        que.push(root);
+        while (!que.empty()) {
+            auto size = que.size();
+            vector<int> temp;
+            for (auto i = 0; i < size; i++) {
+                auto node = que.front();
+                que.pop();
+                temp.emplace_back(node->val);
+                if (node->left != nullptr) {
+                    que.push(node->left);
+                }
+                if (node->right != nullptr) {
+                    que.push(node->right);
+                }
+            }
+            ans.push_back(temp);
+        }
+        return ans;
+    }
+};
+```
+
+> Python
+```Python []
+class Solution:
+    def levelOrder(self, root: TreeNode) -> List[List[int]]:
+        if not root:
+            return []
+        que, ans = [root, ], list(list())
+        while que:
+            size = len(que)
+            temp = []
+            for _ in range(size):
+                node = que[0]
+                temp.append(node.val)
+                del que[0]
+                if node.left:
+                    que.append(node.left)
+                if node.right:
+                    que.append(node.right)
+            ans.append(temp)
         return ans
 ```
