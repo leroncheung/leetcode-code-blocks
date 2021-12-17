@@ -77,4 +77,101 @@ cout << *pa << endl;    // 输出the
 
 
 > 标准模板库STL是一个基于模板类的容器类库，包括链表，队列，列表和堆栈。标准模板库还提供许多常用的算法，包括排序和搜索等。
+> 泛型编程是是一种基于发现高效算法的最抽象表示的编程方法。STL就是泛型编程的例子。
 
+```c++
+// stl的vector删除指定元素6
+vector<int> nums{1,2,3,4,5,6,3,6,6};
+nums.erase(remove(begin(nums), end(nums), 6), end(nums));
+```
+
+```C++
+// 错误代码
+class Test {
+public:
+    Test() = default;
+    ~Test() = default;
+    Test(int t) {}
+    void func() {}
+};
+
+int main() {
+    Test a;
+    a.func();
+    Test b();      // 此处声明了一个函数，应该使用Test b;
+    b.func();   // 编译报错！！！
+
+    return 0;
+}
+```
+
+
+- C++构造函数和析构函数调用次数
+```C++
+class Test {
+public:
+    Test() {
+        cout << "Test::Test()" << endl;
+    }
+    Test(int tmp) : a(tmp) {
+        cout << "Test::Test(int tmp)" << endl;
+    }
+    Test(const Test& tmp) {
+        a = tmp.a;
+        cout << "Test::Test(const Test &)" << endl;
+    }
+    ~Test() {
+        cout << "Test::~Test()" << endl;
+    }
+    
+private:
+    int a;
+};
+
+Test func(Test t) {
+    return t;
+}
+
+int main()
+{
+    // Test tt = func(5);
+    func(5);            // 这句的作用和上一句一样，两次析构
+
+    return 0;
+}
+
+// 输出：
+// Test::Test(int tmp)
+// Test::Test(const Test &)
+// Test::~Test()
+// Test::~Test()
+```
+
+
+> C++找错题
+```c++
+#include <iostream>
+
+class Base {
+public:
+    Base(int t) : a(t) {}
+    ~Base() = default;
+
+private:    // 应该改成protected
+    int a;
+};
+
+class Derived : public Base {
+public:
+    Derived(int t) : a(t) {    // 应该改成：Derived(int t) : Base(t), a(t) {}
+    }
+    ~Derived() = default;
+
+    void print() {
+        std::cout << a + Base::a << std::endl;
+    }
+
+private:
+    int a;
+};
+```
