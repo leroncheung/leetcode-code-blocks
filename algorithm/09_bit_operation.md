@@ -132,3 +132,32 @@
                 xor ^= i ^ num
             return xor ^ len(nums)
     ```
+
+## LC371 两整数之和
+> 不使用运算符+和-，计算并返回两整数之和
+- c++
+```c++ []
+class Solution {
+public:
+    int getSum(int a, int b) {
+        while (a) {
+            unsigned temp = a ^ b;
+            a = (unsigned)(a & b) << 1;
+            b = temp;
+        }
+        return b;
+    }
+};
+```
+- python
+```python []
+class Solution:
+    def getSum(self, a: int, b: int) -> int:
+        a &= 0xffffffff
+        b &= 0xffffffff
+        while a != 0:
+            temp = a ^ b
+            a = ((a & b) << 1) & 0xffffffff
+            b = temp
+        return b if b < 0x80000000 else ~(b ^ 0xffffffff)
+```
