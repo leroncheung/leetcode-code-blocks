@@ -1,6 +1,6 @@
 # Code Blocks
 
-> This is a repository for stored the codes that accepeted by leetcode and also some conclusions written by markdown. It include 6 sections shows beblow.
+> This is a repository for stored the codes that accepeted by leetcode and also some conclusions written by markdown. It include 6 sections shows beblow. You can regard them as leetcode-wiki for training.
 
 - Data Structure
 - Algorithm
