@@ -1,0 +1,1 @@
+参考[Leetbook](https://leetcode.cn/leetbook/detail/disjoint-set/)并查集合集
